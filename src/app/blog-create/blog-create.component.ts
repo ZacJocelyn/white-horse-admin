@@ -9,6 +9,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class BlogCreateComponent implements OnInit {
 
+  public title = '';
+  public author = '';
+  public content = '';
+
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
   ngOnInit() {
@@ -16,6 +20,10 @@ export class BlogCreateComponent implements OnInit {
       const newLink = ['/login'];
       this.router.navigate(newLink);
     }
+  }
+
+  createPost(){
+
   }
 
 }

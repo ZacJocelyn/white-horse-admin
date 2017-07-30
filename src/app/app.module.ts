@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule }   from '@angular/router'
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
@@ -14,6 +15,7 @@ import { AdminService} from './admin.service';
 
 import { AlertModule } from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap';
+import { TinymceModule } from 'angular2-tinymce';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { PaginationModule } from 'ngx-bootstrap';
     LoginComponent
   ],
   imports: [
+    FormsModule,
+    TinymceModule.withConfig({}),
     AlertModule.forRoot(),
     PaginationModule.forRoot(),
     BrowserModule,
