@@ -19,10 +19,20 @@ export class AdminService {
 
   }
 
-  public getDepartments() {
+  public getBlogPosts() {
 
     return this.http
-      .get('/departments')
+      .get(ADMIN_API_URL + '/blogs')
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public getBlogPost( id: any) {
+
+    return this.http
+      .get(ADMIN_API_URL + '/blog/' + id)
       .map(response => {
         return response.json();
       })
@@ -41,6 +51,58 @@ export class AdminService {
       })
       .catch(this.handleError);
   }
+
+  public postNewBlog(title: string, author: string, body: string, image_url: string): Observable<any> {
+
+    const authToken = 'bearer ' + this.apiKey;
+    const headers = new Headers({ 'Authorization': authToken });
+    const req_body = {
+      title: title,
+      author: author,
+      body: body,
+      image_url: image_url
+    };
+
+    return this.http
+      .post(ADMIN_API_URL + '/admin/blog', req_body, { headers: headers })
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public updateBlog(blogId: string, title: string, author: string, body: string, image_url: string): Observable<any> {
+
+    const authToken = 'bearer ' + this.apiKey;
+    const headers = new Headers({ 'Authorization': authToken });
+    const req_body = {
+      title: title,
+      author: author,
+      body: body,
+      image_url: image_url
+    };
+
+    return this.http
+      .put(ADMIN_API_URL + '/admin/blog/' + blogId , req_body, { headers: headers })
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public deleteBlog(blogId: string): Observable<any> {
+
+    const authToken = 'bearer ' + this.apiKey;
+    const headers = new Headers({ 'Authorization': authToken });
+
+    return this.http
+      .delete(ADMIN_API_URL + '/admin/blog/' + blogId , { headers: headers })
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
 
 
   private handleError(error: Response | any) {

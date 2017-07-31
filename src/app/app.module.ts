@@ -16,6 +16,8 @@ import { AdminService} from './admin.service';
 import { AlertModule } from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap';
 import { TinymceModule } from 'angular2-tinymce';
+import {ImageUploadModule} from 'angular2-image-upload';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,12 @@ import { TinymceModule } from 'angular2-tinymce';
     LoginComponent
   ],
   imports: [
+    ImageUploadModule.forRoot(),
     FormsModule,
     TinymceModule.withConfig({}),
     AlertModule.forRoot(),
     PaginationModule.forRoot(),
+    ModalModule.forRoot(),
     BrowserModule,
     HttpModule,
     RouterModule.forRoot([
@@ -40,6 +44,7 @@ import { TinymceModule } from 'angular2-tinymce';
       },
       { path: 'login', component: LoginComponent },
       { path: 'blogs', component: BlogViewComponent },
+      { path: 'create/:id', component: BlogCreateComponent },
       { path: 'create', component: BlogCreateComponent },
       { path: 'images', component: ImagesViewComponent },
       { path: '**', component: LoginComponent }
