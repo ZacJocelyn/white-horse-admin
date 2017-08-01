@@ -13,10 +13,13 @@ export class BlogViewComponent implements OnInit {
 
   @ViewChild(ModalDirective) public staticModal: ModalDirective;
 
-  public posts: any;
+  public posts = [];
 
   public postToDelete: string;
   public postToDeleteIndex: number;
+
+  public modalText: string;
+  public isInfoModal: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
@@ -30,11 +33,12 @@ export class BlogViewComponent implements OnInit {
       .getBlogPosts()
       .subscribe(
       (res) => {
-        console.log( res );
         this.posts = res;
       },
       (error) => {
-
+        this.modalText = 'Error: failed to retrieve the blog posts.';
+        this.isInfoModal = true;
+        this.staticModal.show();
       }
       );
   }
@@ -45,25 +49,25 @@ export class BlogViewComponent implements OnInit {
   }
 
   onDeleteButtonClick(id:string , index:number){
+    this.modalText = 'Are you sure you want to delete this post?';
+    this.isInfoModal = false;
     this.postToDelete = id;
     this.postToDeleteIndex = index;
     this.staticModal.show();
   }
 
   deletePost(){
+
     this.adminService
       .deleteBlog( this.postToDelete )
       .subscribe(
       (res) => {
-        console.log( res );
-        console.log( this.postToDelete );
-        console.log( this.postToDeleteIndex );
-        this.posts.slice( this.postToDeleteIndex , 1 );
-        console.log( this.posts );
+        this.posts.splice( this.postToDeleteIndex , 1 );
         this.staticModal.hide();
       },
       (error) => {
-        this.staticModal.hide();
+        this.modalText = 'Error: failed to delete the post';
+        this.isInfoModal = true;
       }
       );
   }

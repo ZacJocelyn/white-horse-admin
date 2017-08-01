@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild } from '@angular/core';
 import {AdminService} from '../admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 
 @Component({
   selector: 'app-blog-create',
@@ -8,6 +10,8 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./blog-create.component.css']
 })
 export class BlogCreateComponent implements OnInit {
+
+@ViewChild(ModalDirective) public staticModal: ModalDirective;
 
   public title = '';
   public author = '';
@@ -21,6 +25,9 @@ export class BlogCreateComponent implements OnInit {
   public blogId: string;
 
   public isEditing = false;
+
+  public modalText: string;
+  public isInfoModal: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
@@ -46,7 +53,6 @@ export class BlogCreateComponent implements OnInit {
   imageUploaded(event) {
     let res = JSON.parse(event.serverResponse._body);
     this.image_url = res.image_url;
-    console.log(this.image_url);
   }
 
   createPost() {
@@ -55,10 +61,14 @@ export class BlogCreateComponent implements OnInit {
         .updateBlog(this.blogId, this.title, this.author, this.content, this.image_url)
         .subscribe(
         (res) => {
-          console.log(res);
+          this.modalText = 'Successfully updated post.';
+          this.isInfoModal = true;
+          this.staticModal.show();
         },
         (error) => {
-
+          this.modalText = 'Error: Could not update post with changes';
+          this.isInfoModal = true;
+          this.staticModal.show();
         }
         );
     }
@@ -68,10 +78,14 @@ export class BlogCreateComponent implements OnInit {
         .postNewBlog(this.title, this.author, this.content, this.image_url)
         .subscribe(
         (res) => {
-          console.log(res);
+          this.modalText = 'Successfully created new post.';
+          this.isInfoModal = true;
+          this.staticModal.show();
         },
         (error) => {
-
+          this.modalText = 'Error: Could not create new post.';
+          this.isInfoModal = true;
+          this.staticModal.show();
         }
         );
     }
@@ -82,16 +96,23 @@ export class BlogCreateComponent implements OnInit {
       .getBlogPost(id)
       .subscribe(
       (res) => {
-        console.log(res);
         this.title = res[0].title;
         this.author = res[0].author;
         this.content = res[0].body;
         this.image_url = res[0].image_url;
       },
       (error) => {
-
+        this.modalText = 'Error: Could not get post data';
+        this.isInfoModal = true;
+        this.staticModal.show();
       }
       );
+  }
+
+  onOkButtonClick(){
+    this.staticModal.hide();
+    const newLink = ['/blogs'];
+    this.router.navigate(newLink);
   }
 
 }

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
       (res) => {
         this.adminService.apiKey = res.token;
-        const newLink = ['/create'];
+        const newLink = ['/blogs'];
         this.router.navigate(newLink);
       },
       (error) => {
