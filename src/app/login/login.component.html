@@ -1,4 +1,4 @@
-<section class="row" *ngIf="!isAuthenticated">
+<section class="row">
   <div class="col-sm-4"></div>
   <div class="panel col-sm-4">
     <div class="panel-heading">
@@ -9,12 +9,12 @@
       <form class="form-horizontal pl-15 pr-15 pt-15">
         <div class="form-group">
           <div class="col-md-12">
-            <input type="text" class="form-control" id="email" name="username" placeholder="Email" required #email>
+            <input type="text" class="form-control" id="email" name="username" placeholder="Email" required [(ngModel)]="email">
           </div>
         </div>
         <div class="form-group">
           <div class="col-md-12">
-            <input type="text" class="form-control" id="password" name="password" placeholder="Password" required #password>
+            <input type="text" class="form-control" id="password" name="password" placeholder="Password" required [(ngModel)]="password">
           </div>
         </div>
 
