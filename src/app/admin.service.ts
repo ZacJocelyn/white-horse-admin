@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
+import { environment } from '../environments/environment';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-const ADMIN_API_URL = 'http://www.whvapor.com';
+const ADMIN_API_URL = environment.adminApiUrl;
 
 @Injectable()
 export class AdminService {
@@ -103,7 +104,31 @@ export class AdminService {
       .catch(this.handleError);
   }
 
+  public getHomeImages() {
+    return this.http
+      .get(ADMIN_API_URL + '/images')
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
 
+  public updateHomeImage(id: string, title: string, image_url: string): Observable<any> {
+
+    const authToken = 'bearer ' + this.apiKey;
+    const headers = new Headers({ 'Authorization': authToken });
+    const req_body = {
+      title: title,
+      image_url: image_url
+    };
+
+    return this.http
+      .put(ADMIN_API_URL + '/admin/image/' + id , req_body, { headers: headers })
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
 
   private handleError(error: Response | any) {
     console.error(error);

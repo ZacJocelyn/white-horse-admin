@@ -29,6 +29,8 @@ export class BlogCreateComponent implements OnInit {
   public modalText: string;
   public isInfoModal: boolean;
 
+  public isPostButtonDisabled = false;
+
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
   ngOnInit() {
@@ -56,6 +58,8 @@ export class BlogCreateComponent implements OnInit {
   }
 
   createPost() {
+    this.isPostButtonDisabled = true;
+
     if (this.isEditing) {
       this.adminService
         .updateBlog(this.blogId, this.title, this.author, this.content, this.image_url)
@@ -64,11 +68,13 @@ export class BlogCreateComponent implements OnInit {
           this.modalText = 'Successfully updated post.';
           this.isInfoModal = true;
           this.staticModal.show();
+          this.isPostButtonDisabled = false;
         },
         (error) => {
           this.modalText = 'Error: Could not update post with changes';
           this.isInfoModal = true;
           this.staticModal.show();
+          this.isPostButtonDisabled = false;
         }
         );
     }
@@ -81,11 +87,13 @@ export class BlogCreateComponent implements OnInit {
           this.modalText = 'Successfully created new post.';
           this.isInfoModal = true;
           this.staticModal.show();
+          this.isPostButtonDisabled = false;
         },
         (error) => {
           this.modalText = 'Error: Could not create new post.';
           this.isInfoModal = true;
           this.staticModal.show();
+          this.isPostButtonDisabled = false;
         }
         );
     }

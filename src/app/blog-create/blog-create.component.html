@@ -31,7 +31,7 @@
 
     <div class="form-group">
       <div class="col-sm-12 login-btn mt-30">
-        <a class="btn btn-primary" (click)="createPost()">Post  </a>
+        <a class="btn btn-primary" [ngClass]="{'disabled': isPostButtonDisabled}" (click)="createPost()">Post  </a>
       </div>
     </div>
   </form>

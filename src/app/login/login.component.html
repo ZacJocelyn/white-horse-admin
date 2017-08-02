@@ -29,7 +29,7 @@
           <alert [type]="alert_type"><span [innerHtml]="alert_message"></span></alert>
         </div>
 
-        <div class="col-sm-12 login-btn mt-30">
+        <div class="col-sm-12 login-btn mt-30" *ngIf="!isProduction">
           <a class="btn btn-primary" (click)="skip()">Skip  </a>
         </div>
       </form>

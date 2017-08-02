@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
-
+import { environment } from '../../environments/environment';
 import { AlertModule } from 'ngx-bootstrap';
 
 @Component({
@@ -13,6 +13,11 @@ export class LoginComponent implements OnInit {
 
   public email = '';
   public password = '';
+
+  public alert_message: string;
+  public alert_type = 'danger';
+
+  public isProduction = environment.production;
 
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) {
   }
@@ -31,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(newLink);
       },
       (error) => {
-
+        this.alert_message = "Login failed. Please try again";
       }
       );
   }
@@ -39,7 +44,6 @@ export class LoginComponent implements OnInit {
   public skip() {
     this.email = 'vapedenver@gmail.com';
     this.password = 'whitehorseDenver2017';
-    console.log('skip');
     this.submit();
   }
 

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  adminApiUrl: 'https://white-horse-vapor-denver.herokuapp.com'
 };
