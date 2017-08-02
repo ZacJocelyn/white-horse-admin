@@ -1,0 +1,55 @@
+<section class="container mt-20">
+  <form class="form-horizontal pl-15 pr-15 pt-15">
+    <div class="form-group">
+      <div class="col-md-12">
+        <input type="text" class="form-control" name="title" placeholder="Title" required [(ngModel)]="title">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-12">
+        <input type="text" class="form-control" name="author" placeholder="Author" required [(ngModel)]="author">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <app-tinymce name="content" [(ngModel)]="content"></app-tinymce>
+    </div>
+
+    <div class="form-group">
+      <image-upload
+        (onFileUploadFinish)="imageUploaded($event)"
+        [url]="'http://www.whvapor.com/admin/blog/image'"
+        [max]="1"
+        [extensions]="['jpg','png','gif','jpeg']"
+        [headers]="authHeaders">
+      </image-upload>
+    </div>
+
+    <div class="form-group">
+      <img src={{image_url}} class="image-preview"/>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12 login-btn mt-30">
+        <a class="btn btn-primary" [ngClass]="{'disabled': isPostButtonDisabled}" (click)="createPost()">Post  </a>
+      </div>
+    </div>
+  </form>
+</section>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h2>{{modalText}}</h2>
+        <div class="row mt-30" *ngIf="!isInfoModal">
+          <a (click)="deletePost()" class="btn btn-danger">YES</a>
+          <a (click)="staticModal.hide()" class="btn btn-primary">NO</a>
+        </div>
+        <div class="row mt-30" *ngIf="isInfoModal">
+          <a (click)="onOkButtonClick()" class="btn btn-primary">OK</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

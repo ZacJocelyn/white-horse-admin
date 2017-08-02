@@ -1,0 +1,46 @@
+<section>
+  <div class="col-sm-3"></div>
+
+  <div class="col-sm-6" *ngIf="posts.length > 0">
+    <div *ngFor="let post of posts; let i = index" class="post-box">
+      <div class="row">
+        <div class="pull-left col-sm-9">
+          <h3>{{post.title}}</h3>
+        </div>
+        <div class="col-sm-3">
+          <a class="btn btn-danger manage-buttons pull-right" (click)="onDeleteButtonClick(post.id, i)">Delete</a>
+          <a class="btn btn-primary manage-buttons pull-right" (click)="goEditPost(post.id)">Edit</a>
+        </div>
+      </div>
+
+      <h4 class="text-muted">Author: {{post.author}}</h4>
+      <div class="center-block">
+        <img src="{{post.image_url}}" class="image-preview" />
+      </div>
+      <br>
+    </div>
+  </div>
+
+  <div *ngIf="posts.length == 0" class="col-sm-6">
+    <h2 class="text-center">No Blog Posts Found</h2>
+  </div>
+
+  <div class="col-sm-3"></div>
+</section>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h2>{{modalText}}</h2>
+        <div class="row mt-30" *ngIf="!isInfoModal">
+          <a (click)="deletePost()" class="btn btn-danger">YES</a>
+          <a (click)="staticModal.hide()" class="btn btn-primary">NO</a>
+        </div>
+        <div class="row mt-30" *ngIf="isInfoModal">
+          <a (click)="staticModal.hide()" class="btn btn-primary">OK</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

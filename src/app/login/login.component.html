@@ -1,0 +1,40 @@
+<section class="row" *ngIf="!isAuthenticated">
+  <div class="col-sm-4"></div>
+  <div class="panel col-sm-4">
+    <div class="panel-heading">
+      <div class="panel-title h3 mt-30 mb-30">Sign In
+      </div>
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal pl-15 pr-15 pt-15">
+        <div class="form-group">
+          <div class="col-md-12">
+            <input type="text" class="form-control" id="email" name="username" placeholder="Email" required #email>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-12">
+            <input type="text" class="form-control" id="password" name="password" placeholder="Password" required #password>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <!-- Button -->
+          <div class="col-sm-12 login-btn mt-30">
+            <a class="btn btn-primary" (click)="submit()">Login  </a>
+          </div>
+        </div>
+
+        <div *ngIf="alert_message" class="mt-20">
+          <alert [type]="alert_type"><span [innerHtml]="alert_message"></span></alert>
+        </div>
+
+        <div class="col-sm-12 login-btn mt-30" *ngIf="!isProduction">
+          <a class="btn btn-primary" (click)="skip()">Skip  </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-sm-4"></div>
+</section>
